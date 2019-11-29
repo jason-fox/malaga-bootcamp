@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "0bffb109-7af9-4ce3-b269-a53cb1e5c8e8",
+		"name": "FIWARE Subscription Listener",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Set up Lamp subscription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "fiware-service",
+						"value": "openiot",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"description\": \"Notify Subscription Listener of Lamp context changes\",\n  \"subject\": {\n    \"entities\": [\n      {\n        \"idPattern\": \"urn:ngsi-ld:Lamp.*\"\n      }\n    ],\n    \"condition\": {\n      \"attrs\": [\"luminosity\"]\n    }\n  },\n  \"notification\": {\n    \"http\": {\n      \"url\": \"http://listener:3005/subscription/luminosity\"\n    },\n    \"attrs\": [\"luminosity\", \"refStore\", \"supportedUnits\"]\n  },\n  \"throttling\": 5\n}"
+				},
+				"url": {
+					"raw": "http://localhost:1026/v2/subscriptions/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1026",
+					"path": [
+						"v2",
+						"subscriptions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set up Motion subscription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "fiware-service",
+						"type": "text",
+						"value": "openiot"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"description\": \"Notify Subscription Listener of Motion context changes\",\n  \"subject\": {\n    \"entities\": [\n      {\n        \"idPattern\": \"urn:ngsi-ld:Motion.*\"\n      }\n    ],\n    \"condition\": {\n      \"attrs\": [ \"count\" ]\n    }\n  },\n  \"notification\": {\n    \"http\": {\n      \"url\": \"http://listener:3005/subscription/count\"\n    },\n    \"attrs\": [\"count\", \"refStore\", \"supportedUnits\" ]\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:1026/v2/subscriptions/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1026",
+					"path": [
+						"v2",
+						"subscriptions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read from Motion Sensor",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "fiware-service",
+						"value": "openiot",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:1026/v2/entities/urn:ngsi-ld:Motion:001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1026",
+					"path": [
+						"v2",
+						"entities",
+						"urn:ngsi-ld:Motion:001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read from Store 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1026",
+					"path": [
+						"v2",
+						"entities",
+						"urn:ngsi-ld:Store:001"
+					],
+					"query": [
+						{
+							"key": "options",
+							"value": "keyValues",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
